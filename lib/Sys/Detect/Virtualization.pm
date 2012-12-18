@@ -10,11 +10,11 @@ Sys::Detect::Virtualization - Detect if a UNIX system is running as a virtual ma
 
 =head1 VERSION
 
-Version 0.105
+Version 0.106
 
 =cut
 
-our $VERSION = '0.105';
+our $VERSION = '0.106';
 
 use constant {
 	VIRT_KVM       => 'Linux KVM',
@@ -31,6 +31,7 @@ use constant {
 	VIRT_OPENVZ_HOST    => 'OpenVZ Host',
 
 	VIRT_VIRTUALBOX => 'VirtualBox',
+	VIRT_LXC       => 'Linux Containers (LXC)',
 };
 
 my %_hosts = (
@@ -261,7 +262,11 @@ sub _find_bin
 		}
 	}
 
-	return ( grep { -x $_ } map { "$_/$command" } @paths )[0]
+	my $cmd = ( grep { -x $_ } map { "$_/$command" } @paths )[0];
+	if (!defined($cmd) || ($cmd eq '')) {
+		$cmd = '/bin/false';
+	}
+	return $cmd;
 }
 
 =item _fh_apply_patterns ( $fh, $patterns )

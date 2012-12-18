@@ -192,6 +192,26 @@ sub detect_mtab
 	);
 }
 
+=item detect_init_envvars ( )
+
+Check /proc/1/environ for LXC environment variables
+
+=cut
+
+sub detect_init_envvars
+{
+	my ($self) = @_;
+	return $self->_check_file_contents(
+		'/proc/1/environ',
+		[
+		 qr/LIBVIRT_LXC_NAME/ => [ $self->VIRT_LXC ],
+		 qr/LIBVIRT_LXC_UUID/ => [ $self->VIRT_LXC ],
+		 qr/LIBVIRT_LXC_CMDLINE/ => [ $self->VIRT_LXC ],
+		 qr/container=lxc/    => [ $self->VIRT_LXC ],
+		]
+	    );
+}
+
 =item detect_scsi_devices ( )
 
 Check /proc/scsi/scsi for telltale model/vendor information.
