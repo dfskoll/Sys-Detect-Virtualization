@@ -141,6 +141,11 @@ sub detect_dmidecode
 		return [ $self->VIRT_VIRTUALPC ];
 	}
 
+	# VirtualBox
+	if ($product =~ /virtualbox/i) {
+		return [ $self->VIRT_VIRTUALBOX ];
+	}
+
 	return [];
 }
 
