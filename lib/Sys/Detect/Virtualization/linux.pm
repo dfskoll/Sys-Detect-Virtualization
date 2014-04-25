@@ -135,7 +135,7 @@ sub detect_dmidecode
 	# System Information
 	#         Manufacturer: Microsoft Corporation
 	#         Product Name: Virtual Machine
-	my $product = $decoder->keyword('system-product-name');
+	my $product = $decoder->keyword('system-product-name') || '';
 	if( $mfgr && $product && $mfgr =~ /microsoft/i
 	    && $product =~ /virtual machine/i ) {
 		return [ $self->VIRT_VIRTUALPC ];
