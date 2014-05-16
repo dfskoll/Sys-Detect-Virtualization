@@ -155,8 +155,8 @@ sub detect
 	}
 
 	return
-		sort { $guesses->{$b} <=> $guesses->{$a}
-			|| $_priorities{$b} <=> $_priorities{$a}
+		sort { ($guesses->{$b} <=> $guesses->{$a}) ||
+		       (($_priorities{$b} || 1.0)  <=> ($_priorities{$a} || 1.0))
 		} keys %$guesses;
 }
 
